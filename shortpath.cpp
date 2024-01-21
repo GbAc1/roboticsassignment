@@ -60,4 +60,92 @@ void robo(string in) {
                 in.insert(i, "L");
             } else if (in[i] == 'R' && in[i + 1] == 'U' && in[i + 2] == 'R') {
                 in.erase(i, 3);
-                i
+                in.insert(i, "S");
+            } else {
+                break;
+            }
+        }
+    }
+    cout << "the shortest path is: " << in;
+}
+
+int main() {
+    ofstream obj("abc.txt");
+
+    for (int i = 0; i >= 0; i++) {
+        cout << "enter p1, p2, p3, p4, p5" << endl;
+        cin >> p1 >> p2 >> p3 >> p4 >> p5;
+
+        microm aa;
+
+        if (p1 == 1 && p2 == 1 && p3 == 1 && p4 == 0 && p5 == 0) {
+            aa.moveinch();
+            if (p1 == 0 && p2 == 0 && p3 == 0 && p4 == 0 && p5 == 0) {
+                aa.turnleft();
+                obj << "L";
+            } else if (p1 == 0 && p2 == 0 && p3 == 1 && p4 == 0 && p5 == 0) {
+                aa.gostraight();
+                obj << "S";
+            } else {
+                continue;
+            }
+        } else if (p1 == 0 && p2 == 0 && p3 == 1 && p4 == 1 && p5 == 1) {
+            aa.moveinch();
+            if (p1 == 0 && p2 == 0 && p3 == 0 && p4 == 0 && p5 == 0) {
+                aa.turnright();
+                obj << "R";
+            } else if (p1 == 0 && p2 == 0 && p3 == 1 && p4 == 0 && p5 == 0) {
+                aa.turnright();
+                obj << "R";
+            } else {
+                continue;
+            }
+        } else if (p1 == 1 && p2 == 1 && p3 == 1 && p4 == 1 && p5 == 1) {
+            aa.moveinch();
+            if (p1 == 0 && p2 == 0 && p3 == 0 && p4 == 0 && p5 == 0) {
+                aa.turnright();
+                obj << "R";
+            } else if (p1 == 0 && p2 == 0 && p3 == 1 && p4 == 0 && p5 == 0) {
+                aa.turnright();
+                obj << "R";
+            } else if (p1 == 1 && p2 == 1 && p3 == 1 && p4 == 1 && p5 == 1) {
+                aa.stop();
+                break;
+            } else {
+                continue;
+            }
+        } else if (p1 == 0 && p2 == 0 && p3 == 1 && p4 == 0 && p5 == 0) {
+            aa.moveinch();
+            if (p1 == 0 && p2 == 0 && p3 == 0 && p4 == 0 && p5 == 0) {
+                aa.uturn();
+                obj << "U";
+            } else {
+                continue;
+            }
+        } else {
+            aa.gostraight();
+            obj << "S";
+        }
+    }
+
+    obj.close();
+
+    string str;
+    char re;
+
+    cout << "do you want to restart[y/n]" << endl;
+    cin >> re;
+
+    if (re == 'y') {
+        ifstream read("abc.txt");
+        if (read.is_open()) {
+            read >> str;
+            robo(str);
+            read.close();
+        } else {
+            cerr << "Error opening file for reading" << endl;
+        }
+    }
+
+    return 0;
+}
